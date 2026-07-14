@@ -13,8 +13,7 @@ const REQUIRED_ENV = [
   "FIGMA_CLIENT_SECRET",
   "FIGMA_REDIRECT_URI",
   "JWT_SECRET",
-  "NOWPAYMENTS_API_KEY",
-  "NOWPAYMENTS_IPN_SECRET",
+  "USDT_WALLET_ADDRESS",
   "APP_URL",
 ];
 const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
