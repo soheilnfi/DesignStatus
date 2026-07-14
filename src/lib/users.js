@@ -1,5 +1,16 @@
 const { pool } = require("./db");
 
+// Comma-separated list of Figma account emails that always get unlimited
+// access (no free-use limit, no payment required). Meant for the widget's
+// own developer/owner account(s). Empty by default — safe no-op if unset.
+function isAdminEmail(email) {
+  const admins = (process.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+  return !!email && admins.includes(String(email).toLowerCase());
+}
+
 async function upsertUserFromFigma({ figmaId, email, name }) {
   const { rows } = await pool.query(
     `INSERT INTO users (figma_id, email, name)
@@ -17,6 +28,10 @@ async function getUserById(id) {
 }
 
 function licenseStatus(user, freeUses) {
+  if (isAdminEmail(user.email)) {
+    return { allowed: true, subscribed: true, usesLeft: null, admin: true };
+  }
+
   const subscribed =
     user.subscription_active &&
     user.subscription_expires_at &&
@@ -29,4 +44,4 @@ function licenseStatus(user, freeUses) {
   return { allowed: usesLeft > 0, subscribed: false, usesLeft };
 }
 
-module.exports = { upsertUserFromFigma, getUserById, licenseStatus };
+module.exports = { upsertUserFromFigma, getUserById, licenseStatus, isAdminEmail };
