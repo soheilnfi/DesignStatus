@@ -18,7 +18,7 @@ router.post(
     const invoice = await createInvoice({
       orderId,
       priceUsd: PRICE_USD,
-      description: "Flow Tracker – monthly subscription",
+      description: "Design Status – monthly subscription",
     });
 
     await pool.query(

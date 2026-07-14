@@ -5,7 +5,7 @@ const { asyncHandler } = require("../lib/asyncHandler");
 const { getUserById, licenseStatus } = require("../lib/users");
 
 const router = express.Router();
-const FREE_USES = parseInt(process.env.FREE_USES || "3", 10);
+const FREE_USES = parseInt(process.env.FREE_USES || "20", 10);
 
 router.get(
   "/check",
@@ -17,9 +17,8 @@ router.get(
   })
 );
 
-// Called once per plugin "session" (e.g. once when the panel is opened for a
-// document). No-ops (doesn't consume a credit) if the user has an active
-// subscription.
+// Called once per edit attempt. No-ops (doesn't consume a credit) if the
+// user has an active subscription.
 router.post(
   "/increment",
   requireAuth,

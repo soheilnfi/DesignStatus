@@ -1,5 +1,7 @@
 -- Run this once against your Postgres database before starting the server.
 -- (Neon/Supabase: paste into their SQL editor. Anywhere else: psql -f schema.sql)
+-- Note: the server also applies this automatically on first request (see
+-- src/lib/migrate.js), so manual application is optional.
 
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,

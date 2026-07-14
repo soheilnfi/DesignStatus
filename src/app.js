@@ -25,12 +25,12 @@ if (missing.length) {
 
 const app = express();
 
-// The Figma plugin UI calls this API cross-origin without cookies (Bearer
+// The Figma widget UI calls this API cross-origin without cookies (Bearer
 // tokens only), so a permissive CORS policy is fine here.
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => res.send("Flow Tracker backend is running."));
+app.get("/", (req, res) => res.send("Design Status backend is running."));
 
 // Makes sure the Postgres tables exist before any route touches the DB.
 // Cheap no-op on warm instances (see lib/migrate.js).

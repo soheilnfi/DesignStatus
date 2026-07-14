@@ -8,7 +8,7 @@ const { asyncHandler } = require("../lib/asyncHandler");
 
 const router = express.Router();
 
-// Step 1: the plugin opens this in a real browser popup window.
+// Step 1: the widget opens this in a real browser popup window.
 router.get(
   "/figma/start",
   asyncHandler(async (req, res) => {
@@ -32,7 +32,7 @@ router.get("/figma/callback", async (req, res) => {
   const { code, state, error } = req.query;
 
   if (error) {
-    return res.send(renderResultPage(false, "Access denied. Close this window and try again from the plugin."));
+    return res.send(renderResultPage(false, "Access denied. Close this window and try again from the widget."));
   }
   if (!code || !state) {
     return res.status(400).send(renderResultPage(false, "Invalid request."));
@@ -69,7 +69,7 @@ router.get("/figma/callback", async (req, res) => {
   }
 });
 
-// Step 3: the plugin polls this until the callback above has finished.
+// Step 3: the widget polls this until the callback above has finished.
 router.get(
   "/status",
   asyncHandler(async (req, res) => {
@@ -96,7 +96,7 @@ function renderResultPage(success, message) {
 <html>
 <head>
 <meta charset="utf-8">
-<title>Flow Tracker</title>
+<title>Design Status</title>
 <style>
   * { box-sizing: border-box; }
   html, body {
